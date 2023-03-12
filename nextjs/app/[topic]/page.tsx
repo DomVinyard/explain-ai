@@ -15,8 +15,7 @@ export async function generateStaticParams() {
   try {
     const response = await fetch(`${API}/api/rest/topics/all`, { headers });
     const { topics } = await response.json();
-    console.log({ topics });
-    return topics;
+    return topics.slice(0, 5);
   } catch (error) {
     console.error(error);
     return [{ slug: "error" }];
@@ -27,8 +26,10 @@ export default async function Topic({ params: { topic: slug } }: any) {
   const {
     topic: [data],
   } = await (await fetch(`${API}/api/rest/topic/${slug}`, { headers })).json();
+  console.log({ data });
   const isStub = !data?.descriptions?.length;
   const Page = isStub ? Stub : Full;
-  return <Page data={{ slug, ...data }} />;
+  return <>{JSON.stringify(data)}</>;
+  // return <Page data={{ slug, ...data }} />;
   // return <Full {...props} />;
 }
