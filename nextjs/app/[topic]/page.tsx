@@ -8,8 +8,8 @@ const headers = {
   "X-Hasura-Admin-Secret": process.env.HASURA_ADMIN_SECRET as string,
 };
 
-// export const dynamic = "force-static",
-//   dynamicParams = true;
+export const dynamic = "force-static",
+  dynamicParams = true;
 
 export async function generateStaticParams() {
   try {
@@ -19,7 +19,7 @@ export async function generateStaticParams() {
     return topics;
   } catch (error) {
     console.error(error);
-    return [];
+    return [{ slug: "error" }];
   }
 }
 
