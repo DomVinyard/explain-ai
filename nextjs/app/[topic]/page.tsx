@@ -12,9 +12,15 @@ const headers = {
 //   dynamicParams = true;
 
 export async function generateStaticParams() {
-  const response = await fetch(`${API}/api/rest/topics/all`, { headers });
-  const { topics } = await response.json();
-  return topics;
+  try {
+    const response = await fetch(`${API}/api/rest/topics/all`, { headers });
+    const { topics } = await response.json();
+    console.log({ topics });
+    return topics;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }
 
 export default async function Topic({ params: { topic: slug } }: any) {
