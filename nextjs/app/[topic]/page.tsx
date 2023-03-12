@@ -2,10 +2,10 @@ import "server-only";
 import Full from "./components/Full";
 import Stub from "./components/Stub";
 
-const API = "http://localhost:8080";
+const API = process.env.HASURA_ENDPOINT;
 const headers = {
   "Content-Type": "application/json",
-  "X-Hasura-Admin-Secret": "admin_secret",
+  "X-Hasura-Admin-Secret": process.env.HASURA_ADMIN_SECRET as string,
 };
 
 // export const dynamic = "force-static",
