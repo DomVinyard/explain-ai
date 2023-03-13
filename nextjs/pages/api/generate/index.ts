@@ -36,9 +36,9 @@ export default async function handler(
     });
     if (!data) throw new Error("Error generating topic");
 
-    console.log(`[Next.js] Building /${slug}`);
     // await res.revalidate(`/${slug}`);
     for (const audience of ["5", "10", "20"]) {
+      console.log(`[Next.js] Building /${slug}/${audience}`);
       await res.revalidate(`/${slug}/${audience}`);
     }
     // console.log({ revalidationRes });

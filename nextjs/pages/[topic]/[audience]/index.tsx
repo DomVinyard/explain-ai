@@ -1,4 +1,6 @@
 // import "server-only";
+import Inner from "@/pages/components/Inner";
+import Layout from "@/pages/layout";
 import Full from "./components/Full";
 import Stub from "./components/Stub";
 
@@ -52,7 +54,6 @@ export async function getStaticProps({
   const {
     topic: [data],
   } = await response.json();
-  console.log("revalidate", slug, audience, data.descriptions.length);
   const isStub = !data?.descriptions?.length;
   return { props: { ...data, isStub, audience } };
 }
@@ -72,6 +73,10 @@ export default function Topic(props: any) {
   // const isStub = !data?.descriptions?.length;
   const Page = props.isStub ? Stub : Full;
   // return <>{JSON.stringify(props)}</>;
-  return <Page {...props} />;
+  return (
+    <Layout audience={props.audience} slug={props.slug}>
+      <Page {...props} />
+    </Layout>
+  );
   // return <Full {...props} />;
 }

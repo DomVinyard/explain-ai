@@ -1,18 +1,35 @@
-"use client";
-import useLocal from "use-local-storage-state";
+import { Box, Flex } from "@chakra-ui/react";
+import Link from "next/link";
+import Inner from "./Inner";
 
-export default function Header() {
-  const [audience, setAudience] = useLocal("audience", { defaultValue: "10" });
+const audiences = [
+  { url: "5", label: "5" },
+  { url: "10", label: "10" },
+  { url: "20", label: "Adult" },
+];
+
+export default function Header({ slug, audience }: any) {
   return (
-    <>
-      <button
-        onClick={() => {
-          setAudience(audience === "5" ? "10" : "5");
-        }}
-      >
-        test
-      </button>
-      header
-    </>
+    <Box bg="#111">
+      <Inner>
+        <Flex justifyContent={"space-between"}>
+          <Box color="white">Explain</Box>
+          <Flex>
+            {audiences.map((a) => (
+              <Link href={`/${slug}/${a.url}`} key={a.url}>
+                <Box
+                  color="white"
+                  _hover={{ color: "gray.200" }}
+                  cursor="pointer"
+                  border={a.url === audience ? "1px solid white" : "none"}
+                >
+                  {a.label}
+                </Box>
+              </Link>
+            ))}
+          </Flex>
+        </Flex>
+      </Inner>
+    </Box>
   );
 }

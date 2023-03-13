@@ -21,7 +21,7 @@ export default function Stub(props: any) {
       }
       router.replace(`/${props.slug}/${props.audience}`);
     })();
-  }, [props.slug]);
+  }, [props.slug, props.audience]);
 
   return <>{JSON.stringify(props)}</>;
 }
