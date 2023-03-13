@@ -17,9 +17,10 @@ export default async function handler(
     if (!slug) {
       return res.status(400).send("Missing slug");
     }
-
-    console.log(`[Next.js] Revalidating /${slug}`);
-    await res.revalidate(`/${slug}`);
+    // await res.revalidate(`/${slug}`);
+    for (const audience of ["5", "10", "20"]) {
+      await res.revalidate(`/${slug}/${audience}`);
+    }
     // console.log({ revalidationRes });
     return res.json({ revalidated: true });
   } catch (err) {

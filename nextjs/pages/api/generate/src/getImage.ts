@@ -1,9 +1,6 @@
 import request from "request-promise";
-import dotenv from "dotenv";
 
-dotenv.config();
-
-async function getImage({ name }) {
+async function getImage({ name }: any) {
   const options = {
     url: "https://api.bing.microsoft.com/v7.0/images/search",
     qs: {
@@ -23,8 +20,7 @@ async function getImage({ name }) {
     const imageUrl = data.value[0].contentUrl;
     return imageUrl || "";
   } catch (error) {
-    console.error(error);
-    return "";
+    throw error;
   }
 }
 

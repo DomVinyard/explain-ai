@@ -8,6 +8,8 @@ const headers = {
   "X-Hasura-Admin-Secret": process.env.HASURA_ADMIN_SECRET as string,
 };
 
+const audiences = ["5", "10", "20"];
+
 // export const dynamic = "force-static";
 // export const dynamicParams = true;
 // export const dynamic = "force-dynamic";
@@ -17,6 +19,7 @@ const headers = {
 type Params = {
   params: {
     topic: string;
+    audience: string;
   };
 };
 
@@ -24,8 +27,13 @@ export async function getStaticPaths() {
   try {
     const response = await fetch(`${API}/api/rest/topics/all`, { headers });
     const { topics } = await response.json();
+    const paths = audiences
+      .map((audience) =>
+        topics.map((topic: any) => ({ params: { ...topic, audience } }))
+      )
+      .flat();
     return {
-      paths: topics.map((topic: any) => ({ params: topic })),
+      paths,
       fallback: "blocking",
     };
   } catch (error) {
@@ -34,13 +42,19 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params: { topic: slug } }: Params) {
-  const response = await fetch(`${API}/api/rest/topic/${slug}`, { headers });
+export async function getStaticProps({
+  params: { topic: slug, audience },
+}: Params) {
+  const response = await fetch(`${API}/api/rest/topic/${slug}/${audience}`, {
+    headers,
+    next: { revalidate: 0 },
+  });
   const {
     topic: [data],
   } = await response.json();
+  console.log("revalidate", slug, audience, data.descriptions.length);
   const isStub = !data?.descriptions?.length;
-  return { props: { ...data, isStub } };
+  return { props: { ...data, isStub, audience } };
 }
 
 export default function Topic(props: any) {
