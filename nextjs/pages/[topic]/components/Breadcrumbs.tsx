@@ -1,3 +1,3 @@
-export default async function Breadcrumbs() {
+export default function Breadcrumbs() {
   return <>Breadcrumbs</>;
 }

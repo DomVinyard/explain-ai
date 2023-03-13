@@ -1,3 +1,3 @@
-export default async function CardMini() {
+export default function CardMini() {
   return <>test</>;
 }

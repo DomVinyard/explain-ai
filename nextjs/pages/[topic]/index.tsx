@@ -8,38 +8,56 @@ const headers = {
   "X-Hasura-Admin-Secret": process.env.HASURA_ADMIN_SECRET as string,
 };
 
-export const dynamic = "force-static";
-export const dynamicParams = true;
+// export const dynamic = "force-static";
+// export const dynamicParams = true;
 // export const dynamic = "force-dynamic";
 // export const revalidate = 0;
 // export const revalidate = "no-cache";
 
-export async function generateStaticParams() {
+type Params = {
+  params: {
+    topic: string;
+  };
+};
+
+export async function getStaticPaths() {
   try {
     const response = await fetch(`${API}/api/rest/topics/all`, { headers });
     const { topics } = await response.json();
-    return topics; //.slice(0, 5);
+    return {
+      paths: topics.map((topic: any) => ({ params: topic })),
+      fallback: "blocking",
+    };
   } catch (error) {
     console.error(error);
-    return [{ slug: "error" }];
+    return { paths: [{ slug: "error" }], fallback: "blocking" };
   }
 }
 
-export default async function Topic({ params: { topic: slug } }: any) {
-  console.log("page");
+export async function getStaticProps({ params: { topic: slug } }: Params) {
+  const response = await fetch(`${API}/api/rest/topic/${slug}`, { headers });
   const {
     topic: [data],
-  } = await (
-    await fetch(`${API}/api/rest/topic/${slug}`, {
-      headers,
-      cache: "default",
-    })
-  ).json();
-  // console.log({ data });
-  console.log({ regenerate: data.image });
+  } = await response.json();
   const isStub = !data?.descriptions?.length;
-  const Page = isStub ? Stub : Full;
-  // return <>{JSON.stringify(data)}</>;
-  return <Page data={{ slug, ...data }} />;
+  return { props: { ...data, isStub } };
+}
+
+export default function Topic(props: any) {
+  // console.log("page");
+  // const {
+  //   topic: [data],
+  // } = await (
+  //   await fetch(`${API}/api/rest/topic/${slug}`, {
+  //     headers,
+  //     cache: "default",
+  //   })
+  // ).json();
+  // // console.log({ data });
+  // console.log({ regenerate: data.image });
+  // const isStub = !data?.descriptions?.length;
+  const Page = props.isStub ? Stub : Full;
+  // return <>{JSON.stringify(props)}</>;
+  return <Page {...props} />;
   // return <Full {...props} />;
 }

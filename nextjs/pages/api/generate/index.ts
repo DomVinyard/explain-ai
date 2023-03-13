@@ -1,4 +1,4 @@
-import generate from "./generate";
+import generate from "./src/buildQueries";
 
 const DB_ENDPOINT = process.env.DB_ENDPOINT || "http://localhost:8080";
 const DB_SECRET = process.env.DB_SECRET || "admin_secret";

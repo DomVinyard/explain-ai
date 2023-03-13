@@ -1,3 +1,3 @@
-export default async function CardMain() {
+export default function CardMain() {
   return <>test</>;
 }
