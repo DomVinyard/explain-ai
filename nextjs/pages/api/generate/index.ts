@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import generate from "./src/generate";
+import dotenv from "dotenv";
+dotenv.config();
 
 const DB_ENDPOINT = process.env.DB_ENDPOINT || "http://localhost:8080";
 const DB_SECRET = process.env.DB_SECRET || "admin_secret";
