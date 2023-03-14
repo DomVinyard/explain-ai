@@ -14,16 +14,11 @@ export default async function handler(
   // }
 
   try {
-    // This should be the actual path not a rewritten path
-    // e.g. for "/blog/[slug]" this should be "/blog/post-1"
     const { name } = req.body;
 
-    if (!name) {
-      return res.status(400).send("Missing name");
-    }
+    if (!name) return res.status(400).send("Missing name");
     console.log(`[OpenAI] Generating /${name}`);
-    const { slug, data, error } = await generate({ name });
-    if (error) throw error;
+    const { slug, data } = await generate({ name });
     const endpoint = `${DB_ENDPOINT}/api/rest/topic`;
     const body = JSON.stringify(data);
     await fetch(endpoint, {
@@ -37,7 +32,7 @@ export default async function handler(
     if (!data) throw new Error("Error generating topic");
 
     // await res.revalidate(`/${slug}`);
-    for (const audience of ["5", "10", "20"]) {
+    for (const audience of ["5", "20"]) {
       console.log(`[Next.js] Building /${slug}/${audience}`);
       await res.revalidate(`/topic/${slug}/${audience}`);
     }

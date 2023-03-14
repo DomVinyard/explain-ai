@@ -1,33 +1,31 @@
 import Link from "next/link";
-import Inner from "./Inner";
+import { Inner } from "../_app";
 import styles from "./Header.module.css";
 
-const audiences = [
-  { url: "5", label: "5" },
-  { url: "10", label: "10" },
-  { url: "20", label: "Adult" },
-];
-
 export default function Header({ slug, audience, page }: any) {
-  const path = page === "groups" ? "groups" : `topics/${slug}`;
+  const pagePath = page === "groups" ? "groups" : `topic/${slug}`;
+  const audiencePath = audience === "5" ? `20` : "5";
   return (
     <header>
       <Inner>
         <div className={styles.container}>
-          <div style={{ color: "white" }}>ExplainAI</div>
+          <Link href={`/groups/${audience}`}>
+            <div style={{ color: "white" }}>ExplainAI</div>
+          </Link>
           <div style={{ display: "flex" }}>
-            {audiences.map((a) => (
-              <Link href={`/${path}/${a.url}`} key={a.url}>
-                <div
-                  style={{
-                    color: "white",
-                    border: a.url === audience ? "1px solid white" : "none",
-                  }}
-                >
-                  {a.label}
-                </div>
-              </Link>
-            ))}
+            <Link href={`/${pagePath}/${audiencePath}`}>
+              <input
+                type="checkbox"
+                id="audience"
+                name="audience"
+                value={audience}
+                checked={audience === "5"}
+                readOnly
+              />
+              <label className={styles.label} htmlFor="audience">
+                {"Like I'm 5"}
+              </label>
+            </Link>
           </div>
         </div>
       </Inner>

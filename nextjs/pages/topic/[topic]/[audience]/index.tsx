@@ -1,17 +1,13 @@
-import Full from "./components/Full";
+import Full from "./Full";
 import dynamic from "next/dynamic";
+import client from "@/lib/apollo-client";
+import { gql } from "@apollo/client";
 
-const Stub = dynamic(() => import("./components/Stub"), {
+const Stub = dynamic(() => import("../../../components/Stub"), {
   loading: () => <p>Loading...</p>,
 });
 
-const API = process.env.HASURA_ENDPOINT;
-const headers = {
-  "Content-Type": "application/json",
-  "X-Hasura-Admin-Secret": process.env.HASURA_ADMIN_SECRET as string,
-};
-
-const audiences = ["5", "10", "20"];
+const audiences = ["5", "20"];
 type Params = {
   params: {
     topic: string;
@@ -21,11 +17,18 @@ type Params = {
 
 export async function getStaticPaths() {
   try {
-    const response = await fetch(`${API}/api/rest/topics/all`, { headers });
-    const { topics } = await response.json();
+    const { data } = await client.query({
+      query: gql`
+        query ALL_TOPICS {
+          topics: topic {
+            topic: slug
+          }
+        }
+      `,
+    });
     const paths = audiences
       .map((audience) =>
-        topics.map((topic: any) => ({ params: { ...topic, audience } }))
+        data.topics.map((topic: any) => ({ params: { ...topic, audience } }))
       )
       .flat();
     return {
@@ -41,15 +44,47 @@ export async function getStaticPaths() {
 export async function getStaticProps({
   params: { topic: slug, audience },
 }: Params) {
-  const response = await fetch(`${API}/api/rest/topic/${slug}/${audience}`, {
-    headers,
-    next: { revalidate: 0 },
-  });
   const {
-    topic: [data],
-  } = await response.json();
-  const isStub = !data?.descriptions?.length;
-  return { props: { ...data, isStub, audience, page: "topic" } };
+    data: {
+      topic: [topic],
+    },
+  } = await client.query({
+    query: gql`
+      query GET_TOPIC($slug: String, $audience: numeric) {
+        topic(where: { slug: { _eq: $slug } }) {
+          slug
+          name
+          image
+          descriptions(where: { audience: { _eq: $audience } }) {
+            long
+          }
+          parent {
+            topic: parent {
+              slug
+              name
+              grandparent: parent {
+                topic: parent {
+                  slug
+                  name
+                }
+              }
+            }
+          }
+          relationships(where: { audience: { _eq: $audience } }) {
+            to {
+              slug
+              name
+              image
+            }
+            description
+          }
+        }
+      }
+    `,
+    variables: { slug, audience: Number(audience) },
+  });
+  const isStub = !topic.descriptions?.length;
+  return { props: { ...topic, isStub, audience, page: "topic" } };
 }
 
 export default function Topic(props: any) {

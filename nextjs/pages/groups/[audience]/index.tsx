@@ -1,4 +1,5 @@
 import client from "@/lib/apollo-client";
+import Group from "@/pages/components/Group";
 import { gql } from "@apollo/client";
 
 const audiences = ["5", "10", "20"];
@@ -44,9 +45,15 @@ export async function getStaticProps({ params: { audience } }: Params) {
     `,
     variables: { audience: Number(audience) },
   });
-  return { props: { ...data.group, page: "groups" } };
+  return { props: { groups: data.group, page: "groups", audience } };
 }
 
-export default function Groups(props: any) {
-  return <div>{JSON.stringify(props)}</div>;
+export default function Groups({ groups, audience }: any) {
+  return (
+    <div>
+      {groups.map((group: any) => (
+        <Group group={group} key={group.slug} audience={audience} />
+      ))}
+    </div>
+  );
 }

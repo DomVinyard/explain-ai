@@ -2,3 +2,9 @@
   display: flex;
   justify-content: space-between;
 }
+
+.label,
+.label:active,
+.label:visited {
+  color: #fff !important;
+}

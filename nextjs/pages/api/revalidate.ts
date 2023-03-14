@@ -18,7 +18,7 @@ export default async function handler(
       return res.status(400).send("Missing slug");
     }
     // await res.revalidate(`/${slug}`);
-    for (const audience of ["5", "10", "20"]) {
+    for (const audience of ["5", "20"]) {
       await res.revalidate(`/topic/${slug}/${audience}`);
     }
     // console.log({ revalidationRes });

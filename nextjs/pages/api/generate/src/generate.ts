@@ -1,8 +1,7 @@
 import slugify from "slug";
-import request from "request-promise";
 import runGPTQuery from "./runGPTQuery";
-import fs from "fs";
 import getImage from "./getImage";
+import fs from "fs";
 
 const MAX_RELATED = 3;
 
@@ -72,110 +71,127 @@ const generate = async ({ name }: { name: string }) => {
     // run all queries in parallel
     await Promise.all(
       queries.map(async (query) => {
-        if (query.key === "parent") {
-          const parent = await runGPTQuery({
-            query: query.query,
-            system: query.system,
-          });
-          const grandparent = await runGPTQuery({
-            system: "Reply with three words or less.",
-            query: `What field does ${parent} belong to?`,
-          });
-          result.hierarchies.push({
-            parent_slug: slugify(`${parent}`),
-            child_slug: slug,
-          });
-          result.topics.push({
-            name: trim(`${parent}`),
-            slug: slugify(`${parent}`),
-            image: await getImage({ name: parent }),
-          });
-          result.hierarchies.push({
-            parent_slug: slugify(`${grandparent}`),
-            child_slug: slugify(`${parent}`),
-          });
-          result.topics.push({
-            name: trim(`${grandparent}`),
-            slug: slugify(`${grandparent}`),
-            image: await getImage({ name: grandparent }),
-          });
-        }
-        if (query.type === "related") {
-          const response = await runGPTQuery({
-            query: query.query,
-            system: query.system,
-          });
-          const parsedRelated = parseRelated({ relatedBulletString: response });
-          const relatedDescriptionQueries = parsedRelated
-            .map((related: unknown) => {
-              return audiences.map((audience, i) => {
-                return {
-                  name: related,
-                  key: `related_${i}_${audience.key}`,
-                  audience,
-                  system: `I am a ${audience.token}, so use language I would understand. The length of your reply should be 15 words or less.`,
-                  query: `What is the relationship between ${name} and ${related}?`,
-                };
-              });
-            })
-            .flat();
-          (
-            await Promise.all(
-              relatedDescriptionQueries.map(async (query: any) => {
-                const description = await runGPTQuery({
-                  query: query.query,
-                  system: query.system,
-                });
-                return {
-                  key: query.key,
-                  name: query.name,
-                  audience: query.audience.key,
-                  description,
-                };
-              })
-            )
-          ).forEach(async (related, i) => {
-            const related_slug = slugify(related.name);
-            if (!result.topics.find((t: any) => t.slug === related_slug)) {
-              result.topics.push({
-                name: related.name,
-                slug: related_slug,
-                image: await getImage({ name: related.name }),
-              });
-            }
-            result.relationships.push({
-              from_slug: slug,
-              to_slug: related_slug,
-              description: related.description,
-              audience: related.audience,
-              priority: i,
+        try {
+          if (query.key === "parent") {
+            const parent = await runGPTQuery({
+              query: query.query,
+              system: query.system,
             });
-          });
-        }
-        if (query.type === "description") {
-          const response = await runGPTQuery({
-            query: query.query,
-            system: query.system,
-          });
-          if (
-            !result.descriptions.find((d: any) => d.audience === query.audience)
-          ) {
-            result.descriptions.push({
-              topic_slug: slug,
-              audience: query.audience,
+            const grandparent = await runGPTQuery({
+              system: "Reply with three words or less.",
+              query: `What field does ${parent} belong to?`,
+            });
+            result.hierarchies.push({
+              parent_slug: slugify(`${parent}`),
+              child_slug: slug,
+            });
+            result.topics.push({
+              name: trim(`${parent}`),
+              slug: slugify(`${parent}`),
+              image: await getImage({ name: parent }),
+            });
+            result.hierarchies.push({
+              parent_slug: slugify(`${grandparent}`),
+              child_slug: slugify(`${parent}`),
+            });
+            result.topics.push({
+              name: trim(`${grandparent}`),
+              slug: slugify(`${grandparent}`),
+              image: await getImage({ name: grandparent }),
             });
           }
-          result.descriptions.find((d: any) => d.audience === query.audience)[
-            query.length as string
-          ] = response;
+          if (query.type === "related") {
+            const response = await runGPTQuery({
+              query: query.query,
+              system: query.system,
+            });
+            const parsedRelated = parseRelated({
+              relatedBulletString: response,
+            });
+            const relatedDescriptionQueries = parsedRelated
+              .map((related: unknown) => {
+                return audiences.map((audience, i) => {
+                  return {
+                    name: related,
+                    key: `related_${i}_${audience.key}`,
+                    audience,
+                    system: `I am a ${audience.token}, so use language I would understand. The length of your reply should be 15 words or less.`,
+                    query: `What is the relationship between ${name} and ${related}?`,
+                  };
+                });
+              })
+              .flat();
+            (
+              await Promise.all(
+                relatedDescriptionQueries.map(async (query: any) => {
+                  const description = await runGPTQuery({
+                    query: query.query,
+                    system: query.system,
+                  });
+                  return {
+                    key: query.key,
+                    name: query.name,
+                    audience: query.audience.key,
+                    description,
+                  };
+                })
+              )
+            ).forEach(async (related, i) => {
+              const related_slug = slugify(related.name);
+              if (!result.topics.find((t: any) => t.slug === related_slug)) {
+                result.topics.push({
+                  name: related.name,
+                  slug: related_slug,
+                  image: await getImage({ name: related.name }),
+                });
+              }
+              result.relationships.push({
+                from_slug: slug,
+                to_slug: related_slug,
+                description: related.description,
+                audience: related.audience,
+                priority: i,
+              });
+            });
+          }
+          if (query.type === "description") {
+            const response = await runGPTQuery({
+              query: query.query,
+              system: query.system,
+            });
+            if (
+              !result.descriptions.find(
+                (d: any) => d.audience === query.audience
+              )
+            ) {
+              result.descriptions.push({
+                topic_slug: slug,
+                audience: query.audience,
+              });
+            }
+            result.descriptions.find((d: any) => d.audience === query.audience)[
+              query.length as string
+            ] = response;
+          }
+        } catch (e) {
+          throw e;
         }
       })
     );
     return { slug, data: result };
   } catch (e) {
-    console.error(e);
-    return { success: false, error: e };
+    throw e;
   }
 };
 
 export default generate;
+
+// if running from command line, save to a local file
+const runGenerate = async () => {
+  const name = process?.argv
+    ?.find((arg: any) => arg.includes("--topic"))
+    ?.split("=")[1] as string;
+  const { slug, data } = await generate({ name });
+  fs.writeFileSync(`./generated/${slug}.json`, JSON.stringify(data));
+};
+if (process.argv.find((arg) => arg.includes("--topic"))) runGenerate();

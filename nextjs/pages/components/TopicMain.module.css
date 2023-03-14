@@ -1,0 +1,20 @@
+.container {
+  background: #fff;
+}
+
+.image_container {
+  display: flex;
+  justify-content: flex-end;
+  transform: translateY(80px);
+  margin-top: -80px;
+  margin-right: 30px;
+}
+
+.image {
+  height: 240px;
+  width: 240px;
+  border-radius: 100%;
+  background: #ddd;
+  background-position: center;
+  background-size: cover;
+}

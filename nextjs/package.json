@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next build && next start",
     "lint": "next lint",
-    "export": "next export"
+    "export": "next export",
+    "generate": "npx ts-node pages/api/generate/index.ts --esm"
   },
   "dependencies": {
     "@apollo/client": "^3.7.10",
@@ -25,6 +26,7 @@
     "openai": "^3.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-spinners": "^0.13.8",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "server-only": "^0.0.1",
