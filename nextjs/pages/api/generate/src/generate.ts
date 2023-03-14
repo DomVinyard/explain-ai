@@ -18,7 +18,7 @@ const parseRelated = ({ relatedBulletString }: any) =>
     .slice(0, MAX_RELATED);
 
 const audiences = [
-  { key: 5, token: "5 year old", request: "make it super simple" },
+  { key: 5, token: "5 year old", request: "use words I would understand" },
   {
     key: 20,
     token: "non-technical adult",

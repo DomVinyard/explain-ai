@@ -40,11 +40,15 @@ export default async function handler(
 
     // await res.revalidate(`/${slug}`);
     const AUDIENCES = ["5", "20"];
-    for (const { slug } of data.topics) {
-      for (const audience of AUDIENCES) {
-        await res.revalidate(`/topic/${slug}/${audience}`);
-      }
-    }
+    await Promise.all(
+      data.topics
+        .map(({ slug }: any) => {
+          return AUDIENCES.map((audience) => {
+            return res.revalidate(`/topic/${slug}/${audience}`);
+          });
+        })
+        .flat()
+    );
     // console.log({ revalidationRes });
     const end = Date.now();
     console.log(`Execution time: ${end - start} ms`);
