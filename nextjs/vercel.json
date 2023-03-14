@@ -5,6 +5,9 @@
     },
     "pages/api/generate/src/**.ts": {
       "maxDuration": 60
+    },
+    "components/Stub.tsx": {
+      "maxDuration": 60
     }
   }
 }
