@@ -9,7 +9,6 @@ export const metadata = {
 };
 
 export default function MyApp({ Component, pageProps }: any) {
-  console.log({ pageProps });
   return (
     <>
       <Header {...pageProps} />
