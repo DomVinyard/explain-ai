@@ -9,7 +9,7 @@ export default function TopicMain({
     <div className={styles.container}>
       <div>
         <h2>{name}</h2>
-        {description.split("\n\n").map((paragraph: string, i: number) => (
+        {`${description}`.split("\n\n").map((paragraph: string, i: number) => (
           <p key={i}>{paragraph}</p>
         ))}
       </div>
