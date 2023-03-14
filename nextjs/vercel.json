@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/generate/index.js": {
+      "maxDuration": 60
+    }
+  }
+}

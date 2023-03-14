@@ -3,7 +3,7 @@ import runGPTQuery from "./runGPTQuery";
 import getImage from "./getImage";
 
 const MAX_RELATED = 5;
-const RATE_OFFSET = 100; //ms
+const RATE_OFFSET = 200; //ms
 
 const trim = (item: string) =>
   item.replace(/^[^a-zA-Z0-9]*|[^a-zA-Z0-9]*$/g, "").trim();
@@ -125,7 +125,8 @@ const generate = async ({ name }: { name: string }) => {
               .flat();
             (
               await Promise.all(
-                relatedDescriptionQueries.map(async (query: any) => {
+                relatedDescriptionQueries.map(async (query: any, i: number) => {
+                  await sleep(i * RATE_OFFSET);
                   const description = await runGPTQuery({
                     query: query.query,
                     system: query.system,
