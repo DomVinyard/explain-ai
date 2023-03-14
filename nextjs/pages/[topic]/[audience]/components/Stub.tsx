@@ -7,7 +7,6 @@ export default function Stub(props: any) {
   const router = useRouter();
 
   useEffect(() => {
-    console.log("slug loaded", props);
     (async () => {
       const response = await fetch(`/api/generate`, {
         method: "POST",
@@ -19,9 +18,10 @@ export default function Stub(props: any) {
         console.error("error generating topic");
         return;
       }
-      router.replace(`/${props.slug}/${props.audience}`);
+      // router.replace(`/${props.slug}/${props.audience}`);
+      location.reload();
     })();
-  }, [props.slug, props.audience]);
+  }, [props.slug, props.audience, props, router]);
 
   return <>{JSON.stringify(props)}</>;
 }

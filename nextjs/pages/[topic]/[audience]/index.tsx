@@ -1,8 +1,9 @@
-// import "server-only";
-import Inner from "@/pages/components/Inner";
-import Layout from "@/pages/layout";
 import Full from "./components/Full";
-import Stub from "./components/Stub";
+import dynamic from "next/dynamic";
+
+const Stub = dynamic(() => import("./components/Stub"), {
+  loading: () => <p>Loading...</p>,
+});
 
 const API = process.env.HASURA_ENDPOINT;
 const headers = {
@@ -11,13 +12,6 @@ const headers = {
 };
 
 const audiences = ["5", "10", "20"];
-
-// export const dynamic = "force-static";
-// export const dynamicParams = true;
-// export const dynamic = "force-dynamic";
-// export const revalidate = 0;
-// export const revalidate = "no-cache";
-
 type Params = {
   params: {
     topic: string;
@@ -59,24 +53,6 @@ export async function getStaticProps({
 }
 
 export default function Topic(props: any) {
-  // console.log("page");
-  // const {
-  //   topic: [data],
-  // } = await (
-  //   await fetch(`${API}/api/rest/topic/${slug}`, {
-  //     headers,
-  //     cache: "default",
-  //   })
-  // ).json();
-  // // console.log({ data });
-  // console.log({ regenerate: data.image });
-  // const isStub = !data?.descriptions?.length;
-  const Page = props.isStub ? Stub : Full;
-  // return <>{JSON.stringify(props)}</>;
-  return (
-    <Layout audience={props.audience} slug={props.slug}>
-      <Page {...props} />
-    </Layout>
-  );
-  // return <Full {...props} />;
+  if (props.isStub) return <Stub {...props} />;
+  return <Full {...props} />;
 }

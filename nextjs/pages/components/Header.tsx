@@ -1,6 +1,6 @@
-import { Box, Flex } from "@chakra-ui/react";
 import Link from "next/link";
 import Inner from "./Inner";
+import styles from "./Header.module.css";
 
 const audiences = [
   { url: "5", label: "5" },
@@ -10,26 +10,26 @@ const audiences = [
 
 export default function Header({ slug, audience }: any) {
   return (
-    <Box bg="#111">
+    <header>
       <Inner>
-        <Flex justifyContent={"space-between"}>
-          <Box color="white">Explain</Box>
-          <Flex>
+        <div className={styles.container}>
+          <div style={{ color: "white" }}>ExplainAI</div>
+          <div style={{ display: "flex" }}>
             {audiences.map((a) => (
               <Link href={`/${slug}/${a.url}`} key={a.url}>
-                <Box
-                  color="white"
-                  _hover={{ color: "gray.200" }}
-                  cursor="pointer"
-                  border={a.url === audience ? "1px solid white" : "none"}
+                <div
+                  style={{
+                    color: "white",
+                    border: a.url === audience ? "1px solid white" : "none",
+                  }}
                 >
                   {a.label}
-                </Box>
+                </div>
               </Link>
             ))}
-          </Flex>
-        </Flex>
+          </div>
+        </div>
       </Inner>
-    </Box>
+    </header>
   );
 }

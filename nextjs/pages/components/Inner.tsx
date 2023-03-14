@@ -1,9 +1,3 @@
-import { Box } from "@chakra-ui/react";
-
 export default function Inner({ children }: any) {
-  return (
-    <Box maxW={900} mx="auto">
-      {children}
-    </Box>
-  );
+  return <div style={{ maxWidth: 900, margin: "0 auto" }}>{children}</div>;
 }
