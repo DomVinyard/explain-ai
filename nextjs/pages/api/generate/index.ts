@@ -48,6 +48,6 @@ export default async function handler(
     // If there was an error, Next.js will continue
     // to show the last successfully generated page
     console.error(err);
-    return res.status(500).json({ success: false });
+    return res.status(500).json({ error: err, success: false });
   }
 }
