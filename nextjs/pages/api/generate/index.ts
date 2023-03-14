@@ -3,8 +3,8 @@ import generate from "./src/generate";
 import dotenv from "dotenv";
 dotenv.config();
 
-const DB_ENDPOINT = process.env.DB_ENDPOINT || "http://localhost:8080";
-const DB_SECRET = process.env.DB_SECRET || "admin_secret";
+const DB_ENDPOINT = process.env.HASURA_ENDPOINT || "http://localhost:8080";
+const DB_SECRET = process.env.HASURA_ADMIN_SECRET || "admin_secret";
 
 export default async function handler(
   req: NextApiRequest,
