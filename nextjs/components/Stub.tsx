@@ -37,8 +37,8 @@ export default function Stub(props: any) {
       </div>
       <h1 className={styles.h1}>Generating {props.name}</h1>
       <p className={styles.p}>
-        You are the first person to visit this topic. Please wait for a
-        description to be generated
+        You are the first person to visit this topic. Please wait while a
+        description is generated
       </p>
       <div className={styles.loader}>
         <Loader

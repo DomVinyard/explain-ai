@@ -18,7 +18,7 @@ const parseRelated = ({ relatedBulletString }: any) =>
     .slice(0, MAX_RELATED);
 
 const audiences = [
-  { key: 5, token: "5 year old", request: "use words I would understand" },
+  { key: 5, token: "5 year old", request: "use words I can understand" },
   {
     key: 20,
     token: "non-technical adult",
@@ -28,8 +28,8 @@ const audiences = [
 
 const lengths = [
   { key: "extra_short", token: "15 words or less" },
-  { key: "long", token: "about 200 words" },
-];
+  { key: "long", token: { 5: "about 200 words", 20: "about 400 words" } },
+] as any;
 
 const generate = async ({ name }: { name: string }) => {
   try {
@@ -42,7 +42,9 @@ const generate = async ({ name }: { name: string }) => {
           audience: audience.key,
           length: length.key,
           key: `${audience.key}_${length.key}`,
-          system: `I am a ${audience.token}, so ${audience.request}. The length of your reply should be ${length.token}.`,
+          system: `I am a ${audience.token}, so ${
+            audience.request
+          }. The length of your reply should be ${length.token[audience.key]}.`,
           query: `What is ${name}?`,
         });
       }
