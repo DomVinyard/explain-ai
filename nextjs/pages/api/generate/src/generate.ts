@@ -74,6 +74,7 @@ const generate = async ({ name }: { name: string }) => {
       queries.map(async (query, i) => {
         try {
           await sleep(i * RATE_OFFSET);
+          console.log("running", query.query);
           if (query.key === "parent") {
             const parent = await runGPTQuery({
               query: query.query,
