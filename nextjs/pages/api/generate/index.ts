@@ -22,6 +22,7 @@ export default async function handler(
 
     if (!name) return res.status(400).send("Missing name");
     console.log(`[OpenAI] Generating /${name}`);
+    const start = Date.now();
     const { data } = await generate({ name });
     const endpoint = `${DB_ENDPOINT}/api/rest/topic`;
     const body = JSON.stringify(data);
@@ -45,7 +46,14 @@ export default async function handler(
       }
     }
     // console.log({ revalidationRes });
-    return res.json({ success: true, generated: data, database: dbData });
+    const end = Date.now();
+    console.log(`Execution time: ${end - start} ms`);
+    return res.json({
+      success: true,
+      executionTime: `${((end - start) / 1000).toFixed(1)}s`,
+      generated: data,
+      database: dbData,
+    });
   } catch (err) {
     // If there was an error, Next.js will continue
     // to show the last successfully generated page
