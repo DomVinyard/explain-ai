@@ -44,7 +44,6 @@ export async function getStaticPaths() {
 export async function getStaticProps({
   params: { topic: slug, audience },
 }: Params) {
-  console.log({ slug, audience });
   const {
     data: {
       topic: [topic],
@@ -85,6 +84,7 @@ export async function getStaticProps({
     variables: { slug, audience: Number(audience) },
   });
   const isStub = !topic.descriptions?.length;
+  console.log(`[Next.js] Built /${slug}/${audience}${isStub ? " - Stub" : ""}`);
   return {
     props: { ...topic, isStub, audience, page: "topic" },
   };

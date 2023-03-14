@@ -1,10 +1,9 @@
 import slugify from "slug";
 import runGPTQuery from "./runGPTQuery";
 import getImage from "./getImage";
-import fs from "fs";
 
-const MAX_RELATED = 3;
-const RATE_OFFSET = 250; //ms
+const MAX_RELATED = 5;
+const RATE_OFFSET = 100; //ms
 
 const trim = (item: string) =>
   item.replace(/^[^a-zA-Z0-9]*|[^a-zA-Z0-9]*$/g, "").trim();
@@ -61,7 +60,7 @@ const generate = async ({ name }: { name: string }) => {
     });
 
     const result = {
-      topics: [{ name, slug }],
+      topics: [{ name, slug, image: await getImage({ name }) }],
       descriptions: [],
       relationships: [],
       hierarchies: [],

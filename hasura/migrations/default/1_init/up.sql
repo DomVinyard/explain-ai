@@ -3,7 +3,7 @@ CREATE TABLE public.description (
     id uuid DEFAULT gen_random_uuid() NOT NULL,
     topic_slug text NOT NULL,
     audience numeric NOT NULL,
-    short text NOT NULL,
+    short text,
     long text
 );
 CREATE TABLE public.relationship (

@@ -13,15 +13,17 @@ export default async function handler(
   //   return res.status(401).json({ message: "Invalid token" });
   // }
 
+  // check that it doesn't already exist
+
   try {
     const { name } = req.body;
 
     if (!name) return res.status(400).send("Missing name");
     console.log(`[OpenAI] Generating /${name}`);
-    const { slug, data } = await generate({ name });
+    const { data } = await generate({ name });
     const endpoint = `${DB_ENDPOINT}/api/rest/topic`;
     const body = JSON.stringify(data);
-    await fetch(endpoint, {
+    const dbResponse = await fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,12 +31,16 @@ export default async function handler(
       },
       body,
     });
+    const dbData = await dbResponse.json();
+    if (dbData.error) throw new Error(dbData.error);
     if (!data) throw new Error("Error generating topic");
 
     // await res.revalidate(`/${slug}`);
-    for (const audience of ["5", "20"]) {
-      console.log(`[Next.js] Building /${slug}/${audience}`);
-      await res.revalidate(`/topic/${slug}/${audience}`);
+    const AUDIENCES = ["5", "20"];
+    for (const { slug } of data.topics) {
+      for (const audience of AUDIENCES) {
+        await res.revalidate(`/topic/${slug}/${audience}`);
+      }
     }
     // console.log({ revalidationRes });
     return res.json({ success: true });

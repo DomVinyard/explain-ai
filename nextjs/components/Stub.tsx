@@ -1,5 +1,3 @@
-// "use client";
-
 import styles from "./Stub.module.css";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -32,7 +30,9 @@ export default function Stub(props: any) {
       <div className={styles.image_container}>
         <div
           className={styles.image}
-          style={{ backgroundImage: `url(${props.image})` }}
+          style={{
+            backgroundImage: `url(${props.image || "/placeholder.png"})`,
+          }}
         />
       </div>
       <h1 className={styles.h1}>Generating {props.name}</h1>

@@ -1,6 +1,7 @@
 import request from "request-promise";
 
 async function getImage({ name }: any) {
+  if (!name) return "";
   const options = {
     url: "https://api.bing.microsoft.com/v7.0/images/search",
     qs: {

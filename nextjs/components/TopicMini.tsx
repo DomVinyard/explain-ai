@@ -17,7 +17,7 @@ export default function TopicMini({
         </div>
         <div
           className={styles.image}
-          style={{ backgroundImage: `url(${image})` }}
+          style={{ backgroundImage: `url(${image || "/placeholder.png"})` }}
         />
       </div>
     </Link>
