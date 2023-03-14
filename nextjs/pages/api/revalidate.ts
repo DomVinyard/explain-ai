@@ -19,7 +19,7 @@ export default async function handler(
     }
     // await res.revalidate(`/${slug}`);
     for (const audience of ["5", "10", "20"]) {
-      await res.revalidate(`/${slug}/${audience}`);
+      await res.revalidate(`/topic/${slug}/${audience}`);
     }
     // console.log({ revalidationRes });
     return res.json({ revalidated: true });

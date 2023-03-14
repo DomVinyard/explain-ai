@@ -6,8 +6,13 @@ const nextConfig = {
   redirects: async () => {
     return [
       {
-        source: "/:topic",
-        destination: "/:topic/10",
+        source: "/",
+        destination: "/groups/20",
+        permanent: true,
+      },
+      {
+        source: "/topic/:topic",
+        destination: "/topic/:topic/20",
         permanent: true,
       },
     ];

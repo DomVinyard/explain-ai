@@ -49,7 +49,7 @@ export async function getStaticProps({
     topic: [data],
   } = await response.json();
   const isStub = !data?.descriptions?.length;
-  return { props: { ...data, isStub, audience } };
+  return { props: { ...data, isStub, audience, page: "topic" } };
 }
 
 export default function Topic(props: any) {

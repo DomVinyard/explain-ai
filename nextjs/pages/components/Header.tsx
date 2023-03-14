@@ -8,7 +8,8 @@ const audiences = [
   { url: "20", label: "Adult" },
 ];
 
-export default function Header({ slug, audience }: any) {
+export default function Header({ slug, audience, page }: any) {
+  const path = page === "groups" ? "groups" : `topics/${slug}`;
   return (
     <header>
       <Inner>
@@ -16,7 +17,7 @@ export default function Header({ slug, audience }: any) {
           <div style={{ color: "white" }}>ExplainAI</div>
           <div style={{ display: "flex" }}>
             {audiences.map((a) => (
-              <Link href={`/${slug}/${a.url}`} key={a.url}>
+              <Link href={`/${path}/${a.url}`} key={a.url}>
                 <div
                   style={{
                     color: "white",
