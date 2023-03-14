@@ -1,6 +1,9 @@
 // add imports
 import { Configuration, OpenAIApi } from "openai";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 const defaultSystemMessage = "You are a helpful assistant.";
 
 const runGPTQuery = async ({ query, system = "" }: any) => {

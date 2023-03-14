@@ -1,5 +1,8 @@
 import request from "request-promise";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 async function getImage({ name }: any) {
   if (!name) return "";
   const options = {
