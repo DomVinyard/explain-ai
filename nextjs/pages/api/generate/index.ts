@@ -45,7 +45,7 @@ export default async function handler(
       }
     }
     // console.log({ revalidationRes });
-    return res.json({ success: true });
+    return res.json({ success: true, generated: data, database: dbData });
   } catch (err) {
     // If there was an error, Next.js will continue
     // to show the last successfully generated page

@@ -3,7 +3,7 @@ import runGPTQuery from "./runGPTQuery";
 import getImage from "./getImage";
 
 const MAX_RELATED = 5;
-const RATE_OFFSET = 200; //ms
+const RATE_OFFSET = 10; //ms
 
 const trim = (item: string) =>
   item.replace(/^[^a-zA-Z0-9]*|[^a-zA-Z0-9]*$/g, "").trim();
