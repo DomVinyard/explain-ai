@@ -1,5 +1,5 @@
 import client from "@/lib/apollo-client";
-import Group from "@/pages/components/Group";
+import Group from "@/components/Group";
 import { gql } from "@apollo/client";
 
 const audiences = ["5", "10", "20"];

@@ -5,12 +5,11 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "react-spinners/ScaleLoader";
 
-const DISABLE_GENERATE = false;
-
 export default function Stub(props: any) {
   const router = useRouter();
 
   useEffect(() => {
+    const DISABLE_GENERATE = false;
     (async () => {
       if (DISABLE_GENERATE) return;
       const response = await fetch(`/api/generate`, {

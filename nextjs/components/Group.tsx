@@ -2,6 +2,7 @@ import styles from "./Group.module.css";
 import TopicMini from "./TopicMini";
 
 export default function Group({ group, audience }: any) {
+  if (!group) return null;
   return (
     <>
       <h1 className={styles.h1}>

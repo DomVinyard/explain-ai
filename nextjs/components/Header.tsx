@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Inner } from "../_app";
+import { Inner } from "../pages/_app";
 import styles from "./Header.module.css";
 
 export default function Header({ slug, audience, page }: any) {

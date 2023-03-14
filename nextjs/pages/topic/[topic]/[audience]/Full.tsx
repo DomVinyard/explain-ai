@@ -1,6 +1,6 @@
-import Breadcrumbs from "@/pages/components/Breadcrumbs";
-import TopicMain from "@/pages/components/TopicMain";
-import TopicMini from "@/pages/components/TopicMini";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import TopicMain from "@/components/TopicMain";
+import TopicMini from "@/components/TopicMini";
 import styles from "./Full.module.css";
 
 export default function Full(props: any) {
@@ -8,17 +8,21 @@ export default function Full(props: any) {
     <>
       <div className={styles.breadcrumbs}>
         <Breadcrumbs
-          parent={props.parent.topic}
-          grandparent={props.parent.topic?.grandparent.topic}
+          parent={props.parent?.topic}
+          grandparent={props.parent?.topic?.grandparent?.topic}
           audience={props.audience}
         />
       </div>
       <div className={styles.main}>
-        <TopicMain topic={props} />
+        <TopicMain
+          name={props.name}
+          image={props.image}
+          description={props.descriptions?.[0].long}
+        />
       </div>
       <div className={styles.related_container}>
         <h1 className={styles.h1}>Related</h1>
-        {props.relationships.map(({ to: topic, description }: any) => (
+        {props.relationships?.map(({ to: topic, description }: any) => (
           <div className={styles.related} key={topic.slug}>
             <TopicMini
               slug={topic.slug}

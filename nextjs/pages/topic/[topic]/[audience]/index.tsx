@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import client from "@/lib/apollo-client";
 import { gql } from "@apollo/client";
 
-const Stub = dynamic(() => import("../../../components/Stub"), {
+const Stub = dynamic(() => import("../../../../components/Stub"), {
   loading: () => <p>Loading...</p>,
 });
 
@@ -44,6 +44,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({
   params: { topic: slug, audience },
 }: Params) {
+  console.log({ slug, audience });
   const {
     data: {
       topic: [topic],
@@ -84,10 +85,13 @@ export async function getStaticProps({
     variables: { slug, audience: Number(audience) },
   });
   const isStub = !topic.descriptions?.length;
-  return { props: { ...topic, isStub, audience, page: "topic" } };
+  return {
+    props: { ...topic, isStub, audience, page: "topic" },
+  };
 }
 
 export default function Topic(props: any) {
+  if (!props.slug) return <p>Not found</p>;
   if (props.isStub) return <Stub {...props} />;
   return <Full {...props} />;
 }

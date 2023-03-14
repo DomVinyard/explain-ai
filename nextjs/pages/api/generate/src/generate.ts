@@ -4,6 +4,7 @@ import getImage from "./getImage";
 import fs from "fs";
 
 const MAX_RELATED = 3;
+const RATE_OFFSET = 250; //ms
 
 const trim = (item: string) =>
   item.replace(/^[^a-zA-Z0-9]*|[^a-zA-Z0-9]*$/g, "").trim();
@@ -19,7 +20,6 @@ const parseRelated = ({ relatedBulletString }: any) =>
 
 const audiences = [
   { key: 5, token: "5 year old", request: "make it super simple" },
-  { key: 10, token: "10 year old", request: "make it easy to understand" },
   {
     key: 20,
     token: "non-technical adult",
@@ -29,7 +29,6 @@ const audiences = [
 
 const lengths = [
   { key: "extra_short", token: "15 words or less" },
-  { key: "short", token: "50 words or less" },
   { key: "long", token: "about 200 words" },
 ];
 
@@ -68,10 +67,14 @@ const generate = async ({ name }: { name: string }) => {
       hierarchies: [],
     } as any;
 
+    const sleep = (ms: number) =>
+      new Promise((resolve) => setTimeout(resolve, ms));
+
     // run all queries in parallel
     await Promise.all(
-      queries.map(async (query) => {
+      queries.map(async (query, i) => {
         try {
+          await sleep(i * RATE_OFFSET);
           if (query.key === "parent") {
             const parent = await runGPTQuery({
               query: query.query,
@@ -186,12 +189,15 @@ const generate = async ({ name }: { name: string }) => {
 
 export default generate;
 
-// if running from command line, save to a local file
-const runGenerate = async () => {
-  const name = process?.argv
-    ?.find((arg: any) => arg.includes("--topic"))
-    ?.split("=")[1] as string;
-  const { slug, data } = await generate({ name });
-  fs.writeFileSync(`./generated/${slug}.json`, JSON.stringify(data));
-};
-if (process.argv.find((arg) => arg.includes("--topic"))) runGenerate();
+// // if running from command line, save to a local file
+// const runGenerate = async () => {
+//   // const name = process?.argv
+//   //   ?.find((arg: any) => arg.includes("--topic"))
+//   //   ?.split("=")[1] as string;
+//   const name = "Test";
+//   const { slug, data } = await generate({ name });
+//   fs.writeFileSync(`./generated/${slug}.json`, JSON.stringify(data));
+// };
+// // if (process.argv.find((arg) => arg.includes("--topic")))
+// runGenerate();
+// console.log("hi");

@@ -1,5 +1,4 @@
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import Header from "./components/Header";
+import Header from "../components/Header";
 import "./styles.css";
 
 export const metadata = {
@@ -21,20 +20,3 @@ export default function App({ Component, pageProps }: any) {
     </>
   );
 }
-
-// export default function Layout({
-//   children,
-//   slug,
-//   audience,
-// }: {
-//   children: React.ReactNode;
-//   audience?: string;
-//   slug?: string;
-// }) {
-//   return (
-//     <>
-//       <Header slug={slug} audience={audience} />
-//       <Inner>{children}</Inner>
-//     </>
-//   );
-// }
