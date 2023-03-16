@@ -53,8 +53,11 @@ export default async function handler(
 
     await Promise.all(
       AUDIENCES.map(async (audience) => {
-        return await res.revalidate(`/topic/${slug}/${audience}`);
-      })
+        return [
+          await res.revalidate(`/groups/${audience}`),
+          await res.revalidate(`/topic/${slug}/${audience}`),
+        ];
+      }).flat()
     );
     const end = Date.now();
     console.log(`Execution time: ${end - start} ms`);
