@@ -1,11 +1,11 @@
 import styles from "./Stub.module.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "react-spinners/ScaleLoader";
 
 export default function Stub(props: any) {
   const router = useRouter();
-
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const DISABLE_GENERATE = false;
     (async () => {
@@ -21,7 +21,8 @@ export default function Stub(props: any) {
         return;
       }
       // router.replace(`/${props.slug}/${props.audience}`);
-      location.reload();
+      setIsLoading(false);
+      setTimeout(() => location.reload(), 1000);
     })();
   }, [props.slug, props.audience, props, router]);
 
@@ -43,7 +44,7 @@ export default function Stub(props: any) {
       <div className={styles.loader}>
         <Loader
           color={"#fff"}
-          loading={true}
+          loading={isLoading}
           aria-label="Loading Spinner"
           data-testid="loader"
           speedMultiplier={0.8}
