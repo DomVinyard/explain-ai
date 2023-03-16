@@ -50,9 +50,9 @@ export default async function handler(
 
     Promise.all(
       ["5", "20"]
-        .map(async (audience) =>
-          [slug, ...related].map(
-            async (s) => await res.revalidate(`/topic/${s}/${audience}`)
+        .map((audience) =>
+          [slug, ...related].map((s) =>
+            res.revalidate(`/topic/${s}/${audience}`)
           )
         )
         .flat()
