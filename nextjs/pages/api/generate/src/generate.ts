@@ -177,17 +177,18 @@ const generate = async ({ name }: { name: string }) => {
               result.descriptions.push({
                 topic_slug: slug,
                 audience: query.audience,
+                short: "",
               });
             }
             result.descriptions.find((d: any) => d.audience === query.audience)[
               query.length as string
             ] = response;
             // set short as extra_short for backwards compatibility
-            if (query.length === "extra_short") {
-              result.descriptions.find(
-                (d: any) => d.audience === query.audience
-              ).short = response;
-            }
+            // if (query.length === "extra_short") {
+            //   result.descriptions.find(
+            //     (d: any) => d.audience === query.audience
+            //   ).short = response;
+            // }
           }
         } catch (e) {
           throw e;
