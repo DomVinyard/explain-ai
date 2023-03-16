@@ -194,6 +194,11 @@ const generate = async ({ name }: { name: string }) => {
         }
       })
     );
+    // set 10 === 5 for backwards compatibility
+    result.descriptions.push({
+      ...result.descriptions.find((d: any) => d.audience === 5),
+      audience: 10,
+    });
     return { slug, data: result };
   } catch (e) {
     throw e;

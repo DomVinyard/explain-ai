@@ -16,7 +16,10 @@ export default function Group({ group, audience }: any) {
               slug={topic.slug}
               name={topic.name}
               image={topic.image}
-              description={topic.descriptions[0].extra_short}
+              description={
+                topic.descriptions?.[0]?.extra_short ||
+                "Click to generate description"
+              }
               audience={audience}
             />
           </div>
