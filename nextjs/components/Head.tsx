@@ -15,6 +15,7 @@ export function TopicHead(props: any) {
         <meta name="author" content="Sigma Labs" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="image" content={props.image} />
+        <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
     </>
   );
@@ -29,6 +30,7 @@ export function GroupsHead() {
         <meta name="description" content={"Explain it to me. Simply."} />
         <meta name="author" content="Sigma Labs" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
     </>
   );
