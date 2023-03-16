@@ -2,6 +2,7 @@ import client from "@/lib/apollo-client";
 import Group from "@/components/Group";
 import { gql } from "@apollo/client";
 import { GroupsHead } from "@/components/Head";
+import styles from "./index.module.css";
 
 const audiences = ["5", "10", "20"];
 type Params = {
@@ -51,11 +52,11 @@ export async function getStaticProps({ params: { audience } }: Params) {
 
 export default function Groups({ groups, audience }: any) {
   return (
-    <>
+    <div className={styles.container}>
       <GroupsHead />
       {groups.map((group: any) => (
         <Group group={group} key={group.slug} audience={audience} />
       ))}
-    </>
+    </div>
   );
 }

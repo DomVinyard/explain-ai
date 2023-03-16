@@ -4,10 +4,16 @@
 
 .h1 {
   color: #fff;
+  font-size: 2.6rem;
+  margin-bottom: 0;
 }
 
 .description {
   opacity: 0.5;
+  color: #fff;
+  opacity: 0.6;
+  font-size: 1.5rem;
+  margin-bottom: 12px;
 }
 
 .item {
