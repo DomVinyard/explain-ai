@@ -113,19 +113,23 @@ const generate = async ({ name }: { name: string }) => {
             const parsedRelated = parseRelated({
               relatedBulletString: response,
             });
-            const relatedDescriptionQueries = parsedRelated
-              .map((related: unknown) => {
-                return audiences.map((audience, i) => {
-                  return {
-                    name: related,
-                    key: `related_${i}_${audience.key}`,
-                    audience,
-                    system: `I am a ${audience.token}, so use language I would understand. The length of your reply should be 15 words or less.`,
-                    query: `What is the relationship between ${name} and ${related}?`,
-                  };
-                });
-              })
-              .flat();
+            if (parsedRelated.length < 2) return;
+            const relatedDescriptionQueries =
+              parsedRelated.length < 2
+                ? []
+                : parsedRelated
+                    .map((related: unknown) => {
+                      return audiences.map((audience, i) => {
+                        return {
+                          name: related,
+                          key: `related_${i}_${audience.key}`,
+                          audience,
+                          system: `I am a ${audience.token}, so use language I would understand. The length of your reply should be 15 words or less.`,
+                          query: `What is the relationship between ${name} and ${related}?`,
+                        };
+                      });
+                    })
+                    .flat();
             (
               await Promise.all(
                 relatedDescriptionQueries.map(async (query: any, i: number) => {
