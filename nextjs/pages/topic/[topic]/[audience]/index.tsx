@@ -2,6 +2,8 @@ import Full from "./Full";
 import dynamic from "next/dynamic";
 import client from "@/lib/apollo-client";
 import { gql } from "@apollo/client";
+import Head from "next/head";
+import { TopicHead } from "@/components/Head";
 
 const Stub = dynamic(() => import("../../../../components/Stub"), {
   loading: () => <p>Loading...</p>,
@@ -56,6 +58,7 @@ export async function getStaticProps({
           name
           image
           descriptions(where: { audience: { _eq: $audience } }) {
+            extra_short
             long
           }
           parent {
@@ -92,6 +95,10 @@ export async function getStaticProps({
 
 export default function Topic(props: any) {
   if (!props.slug) return <p>Not found</p>;
-  if (props.isStub) return <Stub {...props} />;
-  return <Full {...props} />;
+  return (
+    <>
+      <TopicHead {...props} />
+      {props.isStub ? <Stub {...props} /> : <Full {...props} />}
+    </>
+  );
 }
