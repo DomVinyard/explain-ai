@@ -27,7 +27,10 @@ const audiences = [
 ];
 
 const lengths = [
-  { key: "extra_short", token: "15 words or less" },
+  {
+    key: "extra_short",
+    token: { 5: "15 words or less", 20: "20 words or less" },
+  },
   { key: "long", token: { 5: "about 200 words", 20: "about 400 words" } },
 ] as any;
 
@@ -177,18 +180,17 @@ const generate = async ({ name }: { name: string }) => {
               result.descriptions.push({
                 topic_slug: slug,
                 audience: query.audience,
-                short: "",
               });
             }
             result.descriptions.find((d: any) => d.audience === query.audience)[
               query.length as string
             ] = response;
             // set short as extra_short for backwards compatibility
-            // if (query.length === "extra_short") {
-            //   result.descriptions.find(
-            //     (d: any) => d.audience === query.audience
-            //   ).short = response;
-            // }
+            if (query.length === "extra_short") {
+              result.descriptions.find(
+                (d: any) => d.audience === query.audience
+              ).short = response;
+            }
           }
         } catch (e) {
           throw e;
