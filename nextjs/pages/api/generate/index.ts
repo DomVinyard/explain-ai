@@ -15,7 +15,17 @@ export default async function handler(
   //   return res.status(401).json({ message: "Invalid token" });
   // }
 
-  // check that it doesn't already exist
+  // check that it is linked to an existing topic
+  // const topicInitial = await getTopic({ slug: slugify(req.body.name) });
+  //  if (!topicInitial)
+  //    return res.status(404).send({
+  //      error:
+  //        "Topic not found. You can only generate topics that are linked to existing topics.",
+  //    });
+
+  //  // If this topic has already been generated, return an error
+  //  if (topicInitial.isGenerated)
+  //    return res.status(500).send({ error: "Description already generated" });
 
   try {
     const { name } = req.body;
@@ -37,8 +47,6 @@ export default async function handler(
     const dbData = await dbResponse.json();
     if (dbData.error) throw new Error(dbData.error);
     if (!data) throw new Error("Error generating topic");
-
-    // await res.revalidate(`/${slug}`);
     const AUDIENCES = ["5", "20"];
     await Promise.all(
       data.topics
@@ -49,7 +57,6 @@ export default async function handler(
         })
         .flat()
     );
-    // console.log({ revalidationRes });
     const end = Date.now();
     console.log(`Execution time: ${end - start} ms`);
     return res.json({
@@ -59,8 +66,6 @@ export default async function handler(
       database: dbData,
     });
   } catch (err) {
-    // If there was an error, Next.js will continue
-    // to show the last successfully generated page
     console.error(err);
     return res.status(500).json({ error: err, success: false });
   }
