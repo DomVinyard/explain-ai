@@ -14,18 +14,13 @@ export default function Header({ slug, audience, page }: any) {
             <Image src="/logo.png" alt="Logo" width={200} height={50} />
           </Link>
           <Link href={`/${pagePath}/${audiencePath}`}>
-            <div className={styles.form}>
-              <input
-                type="checkbox"
-                id="audience"
-                name="audience"
-                value={audience}
-                checked={audience === "5"}
-                readOnly
+            <div className={styles.toggle}>
+              <Image
+                src={`/${audience === "5" ? "checked" : "unchecked"}.png`}
+                alt="Switch"
+                width={120}
+                height={24}
               />
-              <label className={styles.label} htmlFor="audience">
-                {"Like I'm 5"}
-              </label>
             </div>
           </Link>
         </div>
