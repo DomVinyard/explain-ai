@@ -20,7 +20,7 @@ export default function TopicMini({
               <Loader
                 color={"#ccc"}
                 loading={true}
-                speedMultiplier={0.2}
+                speedMultiplier={0.3}
                 height={10}
                 width={3}
                 aria-label="Loading Spinner"
