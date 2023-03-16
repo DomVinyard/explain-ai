@@ -55,12 +55,12 @@ const generate = async ({ name }: { name: string }) => {
     queries.push({
       key: "parent",
       system:
-        "Use three words or less. If there is no widely accepted answer, reply with just the word 'none'.",
+        "Use three words or less. If there is no simple answer, reply with just the word 'none'.",
       query: `What field does ${name} belong to?`,
     });
     queries.push({
       type: "related",
-      system: `Reply with a comma separated list. Show up to ${MAX_RELATED} items. Each item should be no more than 1-2 words in length.`,
+      system: `Show up to ${MAX_RELATED} items. Each item should be no more than 1-2 words in length. Please use a comma to separate each item and no additional formatting.`,
       query: `What are some popular topics similar to ${name}?`,
     });
 

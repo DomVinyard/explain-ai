@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Inner } from "../pages/_app";
 import styles from "./Header.module.css";
@@ -10,10 +11,10 @@ export default function Header({ slug, audience, page }: any) {
       <Inner>
         <div className={styles.container}>
           <Link href={`/groups/${audience}`}>
-            <div style={{ color: "white" }}>ExplainAI</div>
+            <Image src="/logo.png" alt="Logo" width={200} height={50} />
           </Link>
-          <div style={{ display: "flex" }}>
-            <Link href={`/${pagePath}/${audiencePath}`}>
+          <Link href={`/${pagePath}/${audiencePath}`}>
+            <div className={styles.form}>
               <input
                 type="checkbox"
                 id="audience"
@@ -25,8 +26,8 @@ export default function Header({ slug, audience, page }: any) {
               <label className={styles.label} htmlFor="audience">
                 {"Like I'm 5"}
               </label>
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
       </Inner>
     </header>

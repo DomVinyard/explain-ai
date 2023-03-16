@@ -46,6 +46,7 @@ export default function Stub(props: any) {
           loading={true}
           aria-label="Loading Spinner"
           data-testid="loader"
+          speedMultiplier={0.8}
         />
       </div>
     </div>

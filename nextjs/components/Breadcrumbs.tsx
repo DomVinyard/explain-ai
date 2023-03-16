@@ -9,7 +9,7 @@ export default function Breadcrumbs({ parent, grandparent, audience }: any) {
           <Link href={`/topic/${grandparent.slug}/${audience}`}>
             <span className={styles.link}>{grandparent.name}</span>
           </Link>
-          <span className={styles.link}>{" > "}</span>
+          <span className={styles.separator}>{">"}</span>
         </>
       )}
       {parent && (

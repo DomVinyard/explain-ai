@@ -5,7 +5,7 @@ import styles from "./Full.module.css";
 
 export default function Full(props: any) {
   return (
-    <>
+    <div className={styles.container}>
       <div className={styles.breadcrumbs}>
         <Breadcrumbs
           parent={props.parent?.topic}
@@ -21,7 +21,7 @@ export default function Full(props: any) {
         />
       </div>
       <div className={styles.related_container}>
-        <h1 className={styles.h1}>Related</h1>
+        <h1 className={styles.h1}>Related Topics</h1>
         {props.relationships?.map(({ to: topic, description }: any) => (
           <div className={styles.related} key={topic.slug}>
             <TopicMini
@@ -30,10 +30,11 @@ export default function Full(props: any) {
               image={topic.image}
               description={description}
               audience={props.audience}
+              isGenerated={topic.descriptions?.aggregate?.count > 0}
             />
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }

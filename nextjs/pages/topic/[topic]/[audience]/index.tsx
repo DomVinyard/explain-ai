@@ -78,6 +78,11 @@ export async function getStaticProps({
               slug
               name
               image
+              descriptions: descriptions_aggregate {
+                aggregate {
+                  count
+                }
+              }
             }
             description
           }

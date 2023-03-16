@@ -1,3 +1,5 @@
+import client from "@/lib/apollo-client";
+import { gql } from "@apollo/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -14,6 +16,29 @@ export default async function handler(
     // e.g. for "/blog/[slug]" this should be "/blog/post-1"
     const slug = req.query.slug || req.body;
 
+    const {
+      data: {
+        topic: [topic],
+      },
+    } = await client.query({
+      query: gql`
+        query REVALIDATE($slug: String) {
+          topic(where: { slug: { _eq: $slug } }) {
+            related: relatedFrom {
+              slug: from_slug
+            }
+          }
+        }
+      `,
+      variables: { slug },
+    });
+
+    const related = [
+      ...(new Set(topic.related.map((r: any) => r.slug)) as any),
+    ];
+
+    console.log("revalidating", related);
+
     if (!slug) {
       return res.status(400).send("Missing slug");
     }
@@ -22,6 +47,18 @@ export default async function handler(
       await res.revalidate(`/topic/${slug}/${audience}`);
       await res.revalidate(`/groups/${audience}`);
     }
+
+    Promise.all(
+      ["5", "20"]
+        .map(async (audience) => [
+          await res.revalidate(`/groups/${audience}`),
+          ...[slug, ...related].map(
+            async (s) => await res.revalidate(`/topic/${s}/${audience}`)
+          ),
+        ])
+        .flat()
+    );
+
     // console.log({ revalidationRes });
     return res.json({ revalidated: true });
   } catch (err) {

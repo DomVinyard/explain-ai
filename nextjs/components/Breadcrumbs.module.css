@@ -1,5 +1,12 @@
 .container {
-  margin-top: 32px;
+  margin-top: 48px;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.separator {
+  color: #ccc;
+  margin: 0 8px;
 }
 
 .link {

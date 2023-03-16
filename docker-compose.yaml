@@ -26,6 +26,7 @@ services:
       HASURA_GRAPHQL_ADMIN_SECRET: admin_secret
       DATABASE_URL: postgres://postgres:postgrespassword@explainai-postgres:5432/postgres
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@explainai-postgres:5432/postgres
+      API_ENDPOINT: http://host.docker.internal:3000
   # explainai-nextjs:
   #   build:
   #     context: ./nextjs

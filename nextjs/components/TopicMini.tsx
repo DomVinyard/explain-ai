@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./TopicMini.module.css";
+import Loader from "react-spinners/ScaleLoader";
 
 export default function TopicMini({
   slug,
@@ -7,13 +8,28 @@ export default function TopicMini({
   image,
   description,
   audience,
+  isGenerated,
 }: any) {
   return (
     <Link href={`/topic/${slug}/${audience}`}>
       <div className={styles.container}>
         <div>
-          <h2>{name}</h2>
-          <p>{description}</p>
+          <h2 className={styles.h2}>
+            {name}
+            {!isGenerated && (
+              <Loader
+                color={"#ccc"}
+                loading={true}
+                speedMultiplier={0.2}
+                height={10}
+                width={3}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+                cssOverride={{ marginLeft: 5, paddingTop: 2 }}
+              />
+            )}
+          </h2>
+          <p className={styles.p}>{description}</p>
         </div>
         <div
           className={styles.image}

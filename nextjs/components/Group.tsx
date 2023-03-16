@@ -21,6 +21,7 @@ export default function Group({ group, audience }: any) {
                 "Click to generate description"
               }
               audience={audience}
+              isGenerated={!!topic.descriptions?.[0]?.extra_short}
             />
           </div>
         ))}

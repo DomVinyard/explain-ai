@@ -8,9 +8,11 @@ export default function TopicMain({
   return (
     <div className={styles.container}>
       <div>
-        <h2>{name}</h2>
+        <h2 className={styles.h2}>{name}</h2>
         {`${description}`.split("\n\n").map((paragraph: string, i: number) => (
-          <p key={i}>{paragraph}</p>
+          <p className={styles.p} key={i}>
+            {paragraph}
+          </p>
         ))}
       </div>
       <div className={styles.image_container}>
