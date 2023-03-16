@@ -4,7 +4,7 @@ import TopicMini from "./TopicMini";
 export default function Group({ group, audience }: any) {
   if (!group) return null;
   return (
-    <>
+    <div className={styles.container}>
       <h1 className={styles.h1}>
         {group.name}{" "}
         <span className={styles.description}>{group.description}</span>
@@ -26,6 +26,6 @@ export default function Group({ group, audience }: any) {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }
