@@ -7,7 +7,7 @@ export function TopicHead(props: any) {
     <>
       <Head>
         <title>Explain {props.name}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="description" content={description} />
         <meta name="author" content="Sigma Labs" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

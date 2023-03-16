@@ -19,8 +19,8 @@ export default function Header({ slug, audience, page }: any) {
               height={50}
             />
           </Link>
-          <Link href={`/${pagePath}/${audiencePath}`}>
-            <div style={{ pointerEvents: page === "stub" ? "none" : "auto" }}>
+          <div style={{ pointerEvents: page === "stub" ? "none" : "auto" }}>
+            <Link href={`/${pagePath}/${audiencePath}`}>
               <Image
                 className={styles.pointer}
                 src={`/${audience === "5" ? "checked" : "unchecked"}.png`}
@@ -28,8 +28,8 @@ export default function Header({ slug, audience, page }: any) {
                 width={120}
                 height={24}
               />
-            </div>
-          </Link>
+            </Link>
+          </div>
         </div>
       </Inner>
     </header>
