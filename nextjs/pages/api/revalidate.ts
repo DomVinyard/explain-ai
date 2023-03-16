@@ -43,10 +43,10 @@ export default async function handler(
       return res.status(400).send("Missing slug");
     }
     // await res.revalidate(`/${slug}`);
-    for (const audience of ["5", "20"]) {
-      await res.revalidate(`/topic/${slug}/${audience}`);
-      await res.revalidate(`/groups/${audience}`);
-    }
+    // for (const audience of ["5", "20"]) {
+    //   await res.revalidate(`/topic/${slug}/${audience}`);
+    //   await res.revalidate(`/groups/${audience}`);
+    // }
 
     Promise.all(
       ["5", "20"]
