@@ -94,7 +94,7 @@ export async function getStaticProps({
   const isStub = !topic.descriptions?.length;
   console.log(`[Next.js] Built /${slug}/${audience}${isStub ? " - Stub" : ""}`);
   return {
-    props: { ...topic, isStub, audience, page: "topic" },
+    props: { ...topic, isStub, audience, page: isStub ? "stub" : "topic" },
   };
 }
 

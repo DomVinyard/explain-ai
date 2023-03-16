@@ -7,7 +7,7 @@ export default function Header({ slug, audience, page }: any) {
   const pagePath = page === "groups" ? "groups" : `topic/${slug}`;
   const audiencePath = audience === "5" ? `20` : "5";
   return (
-    <header>
+    <header style={{ pointerEvents: page === "stub" ? "none" : "auto" }}>
       <Inner>
         <div className={styles.container}>
           <Link href={`/groups/${audience}`}>
