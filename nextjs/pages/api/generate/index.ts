@@ -41,7 +41,12 @@ export default async function handler(
       );
 
     // Check that the generated_at field is empty. if not, reject (it's already done)
-    if (topic.generated_at) return res.json({ success: false, reload: true });
+    if (topic.generated_at)
+      return res.json({
+        success: false,
+        error:
+          "This topic has already been generated, please try refreshing the page.",
+      });
 
     //
     // Begin generation
@@ -120,6 +125,7 @@ export default async function handler(
     });
   } catch (error: Error | any) {
     console.error(error);
+    // TODO, also delete any assets created
     await client.mutate({
       mutation: gql`
         mutation SET_GENERATED_TIMESTAMP($slug: String) {
