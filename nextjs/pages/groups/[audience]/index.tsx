@@ -47,7 +47,13 @@ export async function getStaticProps({ params: { audience } }: Params) {
     `,
     variables: { audience: Number(audience) },
   });
-  return { props: { groups: data.group, page: "groups", audience } };
+  return {
+    props: {
+      groups: data.group,
+      page: "groups",
+      audience,
+    },
+  };
 }
 
 export default function Groups({ groups, audience }: any) {

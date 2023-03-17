@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import "./styles.css";
+import dynamic from "next/dynamic";
 
 export const metadata = {
   title: "Create Next App",
@@ -10,10 +11,15 @@ export function Inner({ children }: any) {
   return <main>{children}</main>;
 }
 
+const Splash = dynamic(() => import("../components/Splash"), {
+  loading: () => <p>Loading...</p>,
+});
+
 export default function App({ Component, pageProps }: any) {
   return (
     <>
       <Header {...pageProps} />
+      {pageProps.page === "groups" && <Splash />}
       <Inner>
         <Component {...pageProps} />
       </Inner>
