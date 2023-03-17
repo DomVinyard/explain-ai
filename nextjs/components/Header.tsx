@@ -15,8 +15,8 @@ export default function Header({ slug, audience, page }: any) {
               className={styles.pointer}
               src="/logo.png"
               alt="Logo"
-              width={200}
-              height={50}
+              width={160}
+              height={43}
             />
           </Link>
           <div style={{ pointerEvents: page === "stub" ? "none" : "auto" }}>
