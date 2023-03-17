@@ -48,7 +48,7 @@ export default async function handler(
     //   await res.revalidate(`/groups/${audience}`);
     // }
 
-    Promise.all(
+    await Promise.all(
       ["5", "20"]
         .map((audience) => [
           res.revalidate(`/groups/${audience}`),
