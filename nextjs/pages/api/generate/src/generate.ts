@@ -60,7 +60,7 @@ const generate = async ({ name }: { name: string }) => {
     });
     queries.push({
       type: "related",
-      system: `Show up to ${MAX_RELATED} items. Each item should be no more than 1-2 words in length. Please use a comma to separate each item and no additional formatting.`,
+      system: `Show up to ${MAX_RELATED} items. Each item should be no more than 1-2 words in length. Please use a comma to separate each item with no additional formatting.`,
       query: `What are some popular topics similar to ${name}?`,
     });
 
@@ -87,7 +87,7 @@ const generate = async ({ name }: { name: string }) => {
             });
             const grandparent = await runGPTQuery({
               system: "Reply with three words or less.",
-              query: `What field does ${parent} belong to?`,
+              query: `What field does ${parent} belong to? If there is no simple answer, reply with just the word 'none'.`,
             });
             result.hierarchies.push({
               parent_slug: slugify(`${parent}`),
