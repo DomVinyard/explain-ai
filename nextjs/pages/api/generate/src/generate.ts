@@ -31,7 +31,7 @@ const lengths = [
     key: "extra_short",
     token: { 5: "15 words or less", 20: "20 words or less" },
   },
-  { key: "long", token: { 5: "about 200 words", 20: "about 400 words" } },
+  { key: "long", token: { 5: "about 200 words", 20: "about 300 words" } },
 ] as any;
 
 const generate = async ({ name }: { name: string }) => {
