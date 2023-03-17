@@ -5,7 +5,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Object3D } from "three/src/core/Object3D";
 import Image from "next/image";
 
-const ROTATION_SPEED = 0.003;
+const ROTATION_SPEED = 0.002;
 const Model = ({ baseSpeed = 0.0002 }): any => {
   const group: any = useRef();
   const [model, setModel] = useState<Object3D | null>(null);
