@@ -41,12 +41,19 @@ export default async function handler(
       );
 
     // Check that the generated_at field is empty. if not, reject (it's already done)
-    if (topic.generated_at)
+    if (topic.generated_at) {
+      await Promise.all(
+        ["5", "20"].map((audience) =>
+          res.revalidate(`/topic/${slug}/${audience}`)
+        )
+      );
       return res.json({
         success: false,
+        // reload: true,
         error:
           "This topic has already been generated, please try refreshing the page.",
       });
+    }
 
     //
     // Begin generation
@@ -110,10 +117,10 @@ export default async function handler(
     const dbData = await dbResponse.json();
     if (dbData.error) throw new Error(dbData.error);
     if (!data) throw new Error("Error generating topic");
-    const AUDIENCES = ["5", "20"];
-
     await Promise.all(
-      AUDIENCES.map((audience) => res.revalidate(`/topic/${slug}/${audience}`))
+      ["5", "20"].map((audience) =>
+        res.revalidate(`/topic/${slug}/${audience}`)
+      )
     );
     const end = Date.now();
     console.log(`Execution time: ${end - start} ms`);
@@ -142,10 +149,15 @@ export default async function handler(
       variables: { slug },
     });
     // set generated_At to null
+
+    await Promise.all(
+      ["5", "20"].map((audience) =>
+        res.revalidate(`/topic/${slug}/${audience}`)
+      )
+    );
     return res.json({
       error: error?.message as string,
       success: false,
-      hello: "world",
     });
   }
 }
