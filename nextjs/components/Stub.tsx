@@ -21,7 +21,7 @@ export default function Stub(props: any) {
         const { success, reload, error } = await response.json();
         if (success || reload) {
           setIsLoading(false);
-          setTimeout(() => location.reload(), 1000);
+          setTimeout(() => location.reload(), 100);
         } else {
           setError(error);
           return;
