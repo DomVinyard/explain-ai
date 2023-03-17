@@ -4,7 +4,7 @@ export function TopicHead(props: any) {
   const description =
     props.descriptions?.[0]?.extra_short || "Generating Description";
   console.log({ props });
-  const audience = props.audience === "5" ? ` like I'm 5` : "";
+  const audience = props.audience === "5" ? ` (Like I'm 5)` : "";
   const title = `Explain ${props.name}${audience}`;
   const image = props?.image || "/placeholder.png";
   return (
