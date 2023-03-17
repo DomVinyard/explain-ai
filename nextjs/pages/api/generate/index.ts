@@ -52,9 +52,7 @@ export default async function handler(
     const AUDIENCES = ["5", "20"];
 
     await Promise.all(
-      AUDIENCES.map(async (audience) =>
-        res.revalidate(`/topic/${slug}/${audience}`)
-      )
+      AUDIENCES.map((audience) => res.revalidate(`/topic/${slug}/${audience}`))
     );
     const end = Date.now();
     console.log(`Execution time: ${end - start} ms`);

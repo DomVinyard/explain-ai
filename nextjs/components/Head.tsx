@@ -3,18 +3,21 @@ import Head from "next/head";
 export function TopicHead(props: any) {
   const description =
     props.descriptions?.[0]?.extra_short || "Generating Description";
+  console.log(props, description);
+  const title = `Explain ${props.name}`;
+  const image = props?.image || "/placeholder.png";
   return (
     <>
       <Head>
-        <title>Explain {props.name}</title>
+        <title>{title}</title>
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="description" content={description} />
         <meta name="author" content="Sigma Labs" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="image" content={props.image} />
+        <meta name="image" content={image} />
         <meta property="og:site_name" content={"ExplainAI"} />
         <meta property="og:description" content={description} />
-        <meta property="og:image" content={props.image} />
+        <meta property="og:image" content={image} />
       </Head>
     </>
   );
