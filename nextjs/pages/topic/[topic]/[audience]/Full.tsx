@@ -21,7 +21,9 @@ export default function Full(props: any) {
         />
       </div>
       <div className={styles.related_container}>
-        <h1 className={styles.h1}>Related Topics</h1>
+        {props.relationships?.length && (
+          <h1 className={styles.h1}>Related Topics</h1>
+        )}
         {props.relationships?.map(({ to: topic, description }: any) => (
           <div className={styles.related} key={topic.slug}>
             <TopicMini
