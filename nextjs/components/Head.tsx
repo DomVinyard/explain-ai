@@ -1,5 +1,35 @@
 import Head from "next/head";
 
+const Favicon = () => (
+  <>
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
+    <link
+      rel="mask-icon"
+      href="/favicon/safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
+    <meta name="msapplication-TileColor" content="#2b5797" />
+    <meta name="theme-color" content="#ffffff" />
+  </>
+);
+
 export function TopicHead(props: any) {
   const description =
     props.descriptions?.[0]?.extra_short || "Generating Description";
@@ -10,7 +40,7 @@ export function TopicHead(props: any) {
     <>
       <Head>
         <title>{title}</title>
-        <link rel="shortcut icon" href="/favicon.ico" />
+        <Favicon />
         <meta name="description" content={description} />
         <meta name="author" content="Sigma Labs" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,7 +58,7 @@ export function GroupsHead() {
     <>
       <Head>
         <title>ExplainAI: The AI Knowledge Platform</title>
-        <link rel="icon" href="/favicon.ico" />
+        <Favicon />
         <meta property="og:site_name" content={"ExplainAI"} />
         <meta name="description" content={"The AI Knowledge Platform"} />
         <meta name="author" content="Sigma Labs" />
