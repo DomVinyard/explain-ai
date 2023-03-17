@@ -19,7 +19,12 @@ export default function Header({ slug, audience, page }: any) {
               height={43}
             />
           </Link>
-          <div style={{ pointerEvents: page === "stub" ? "none" : "auto" }}>
+          <div
+            style={{
+              pointerEvents: page === "stub" ? "none" : "auto",
+              opacity: page === "stub" ? 0 : 1,
+            }}
+          >
             <Link href={`/${pagePath}/${audiencePath}`}>
               <Image
                 className={styles.pointer}
