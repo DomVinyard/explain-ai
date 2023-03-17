@@ -3,7 +3,6 @@ import Head from "next/head";
 export function TopicHead(props: any) {
   const description =
     props.descriptions?.[0]?.extra_short || "Generating Description";
-  console.log(props, description);
   const title = `Explain ${props.name}`;
   const image = props?.image || "/placeholder.png";
   return (

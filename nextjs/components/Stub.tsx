@@ -6,6 +6,7 @@ import Loader from "react-spinners/ScaleLoader";
 export default function Stub(props: any) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState() as any;
   useEffect(() => {
     const DISABLE_GENERATE = false;
     (async () => {
@@ -15,14 +16,17 @@ export default function Stub(props: any) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: props.name }),
       });
-      const { success } = await response.json();
-      if (!success) {
+      // const { success, reload, error } = await response.json();
+      const { success, reload, error } = await response.json();
+      if (success || reload) {
+        setIsLoading(false);
+        setTimeout(() => location.reload(), 500);
+      } else {
+        setError(error);
         console.error("error generating topic");
         return;
       }
       // router.replace(`/${props.slug}/${props.audience}`);
-      setIsLoading(false);
-      setTimeout(() => location.reload(), 1000);
     })();
   }, [props.slug, props.audience, props, router]);
 
@@ -36,20 +40,32 @@ export default function Stub(props: any) {
           }}
         />
       </div>
-      <h1 className={styles.h1}>Generating {props.name}</h1>
-      <p className={styles.p}>
-        You are the first person to visit this topic. Please wait while an AI
-        description is generated
-      </p>
-      <div className={styles.loader}>
-        <Loader
-          color={"#fff"}
-          loading={isLoading}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-          speedMultiplier={0.8}
-        />
-      </div>
+      {!error && (
+        <>
+          <h1 className={styles.h1}>Generating {props.name}</h1>
+          <p className={styles.p}>
+            You are the first person to visit this topic. Please wait while an
+            AI description is generated
+          </p>
+        </>
+      )}
+      {error && (
+        <>
+          <h1 className={styles.h1}>Error Generating {props.name}</h1>
+          <p className={styles.p}>{error || "Error generating topic"}</p>
+        </>
+      )}
+      {!error && (
+        <div className={styles.loader}>
+          <Loader
+            color={"#fff"}
+            loading={isLoading}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+            speedMultiplier={0.8}
+          />
+        </div>
+      )}
     </div>
   );
 }
