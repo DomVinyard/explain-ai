@@ -3,20 +3,12 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Object3D } from "three/src/core/Object3D";
-import { Inner } from "@/pages/_app";
 import Image from "next/image";
 
 const ROTATION_SPEED = 0.005;
-const incrementSpeed = 0.001;
-const maxSpeed = 0.01;
-
-const ROTATE_GLOBE = true;
-
 const Model = ({ baseSpeed = 0.0002 }): any => {
-  //   const isMobile = useBreakpointValue({ base: true, md: false });
   const group: any = useRef();
   const [model, setModel] = useState<Object3D | null>(null);
-  const [rotateAt, setRotateAt] = useState(baseSpeed);
   const [mixer] = useState(() => new THREE.AnimationMixer(null as any));
 
   useEffect(() => {
@@ -25,7 +17,6 @@ const Model = ({ baseSpeed = 0.0002 }): any => {
       const nodes = await gltf.parser.getDependencies("node");
       const group = new THREE.Group();
       nodes.forEach((node: any) => group.add(node));
-      // console.log(nodes);
       setModel(group);
     });
   }, []);
@@ -33,7 +24,7 @@ const Model = ({ baseSpeed = 0.0002 }): any => {
   useFrame((_: any, delta: any) => mixer.update(delta));
   useFrame(() => {
     if (typeof group.current != "undefined")
-      return (group.current.rotation.y += ROTATE_GLOBE ? rotateAt : 0);
+      return (group.current.rotation.y += baseSpeed);
   });
 
   return (
@@ -70,8 +61,7 @@ const Lights = () => {
 };
 
 const Globe = () => {
-  //   const isMobile = useBreakpointValue({ base: true, md: false });
-  const SHOW_GLOBE = true; //!isMobile;
+  const SHOW_GLOBE = true;
   return (
     <div
       style={{
@@ -83,9 +73,7 @@ const Globe = () => {
     >
       <Canvas
         style={{ height: "100%", opacity: SHOW_GLOBE ? 1 : 0 }}
-        // colorManagement
         camera={{
-          //   position: [1, 1, 1],
           fov: 50,
           near: 0.1,
           far: 1000,
@@ -108,6 +96,7 @@ const HomePageComponent = () => {
           backgroundColor: "#111",
           position: "relative",
           height: "auto",
+          overflow: "hidden",
         }}
       >
         <div
@@ -118,42 +107,19 @@ const HomePageComponent = () => {
             height: "100%",
           }}
         >
-          <div
-          // width="100%"
-          // position={"absolute"}
-          // zIndex={isSearchFocusMobile ? 2 : 1}
-          >
-            <div
-            //   p={3}
-            //   mx={2}
-            //   pt={{ base: "65px", md: 20 }}
-            //   textAlign={{ base: "center", md: "left" }}
-            //   maxWidth={1200}
-            //   m="0 auto"
-            //   color={"#fff"}
-            //   fontSize={{ base: "38px", md: "42px", lg: "60px" }}
-            //   fontFamily={"Montserrat"}
-            //   fontWeight={700}
-            >
-              <div
-              //   lineHeight={"1"}
-              >
-                <main>
-                  <Image
-                    alt="The AI knowledge platform"
-                    style={{
-                      marginTop: 100,
-                      position: "absolute",
-                      marginLeft: -80,
-                    }}
-                    width={340}
-                    height={260}
-                    src="/byline.png"
-                  />
-                </main>
-              </div>
-            </div>
-          </div>
+          <main>
+            <Image
+              alt="The AI knowledge platform"
+              style={{
+                marginTop: 100,
+                position: "absolute",
+                marginLeft: -80,
+              }}
+              width={340}
+              height={260}
+              src="/byline.png"
+            />
+          </main>
           <Globe />
         </div>
       </div>

@@ -10,23 +10,26 @@ export default function Stub(props: any) {
   useEffect(() => {
     const DISABLE_GENERATE = false;
     (async () => {
-      if (DISABLE_GENERATE) return;
-      const response = await fetch(`/api/generate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: props.name }),
-      });
-      // const { success, reload, error } = await response.json();
-      const { success, reload, error } = await response.json();
-      if (success || reload) {
-        setIsLoading(false);
-        setTimeout(() => location.reload(), 500);
-      } else {
-        setError(error);
-        console.error("error generating topic");
-        return;
+      try {
+        if (DISABLE_GENERATE) return;
+        const response = await fetch(`/api/generate`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name: props.name }),
+        });
+        // const { success, reload, error } = await response.json();
+        const { success, reload, error } = await response.json();
+        if (success || reload) {
+          setIsLoading(false);
+          setTimeout(() => location.reload(), 500);
+        } else {
+          setError(error);
+          return;
+        }
+        // router.replace(`/${props.slug}/${props.audience}`);
+      } catch (error) {
+        setError("Generation timed out. Please try again later.");
       }
-      // router.replace(`/${props.slug}/${props.audience}`);
     })();
   }, [props.slug, props.audience, props, router]);
 
