@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Object3D } from "three/src/core/Object3D";
 import { Inner } from "@/pages/_app";
+import Image from "next/image";
 
 const ROTATION_SPEED = 0.005;
 const incrementSpeed = 0.001;
@@ -16,7 +17,7 @@ const Model = ({ baseSpeed = 0.0002 }): any => {
   const group: any = useRef();
   const [model, setModel] = useState<Object3D | null>(null);
   const [rotateAt, setRotateAt] = useState(baseSpeed);
-  const [mixer] = useState(() => new THREE.AnimationMixer(null));
+  const [mixer] = useState(() => new THREE.AnimationMixer(null as any));
 
   useEffect(() => {
     const loader = new GLTFLoader();
@@ -138,13 +139,15 @@ const HomePageComponent = () => {
               //   lineHeight={"1"}
               >
                 <main>
-                  <img
+                  <Image
+                    alt="The AI knowledge platform"
                     style={{
                       marginTop: 100,
                       position: "absolute",
                       marginLeft: -80,
                     }}
                     width={340}
+                    height={260}
                     src="/byline.png"
                   />
                 </main>

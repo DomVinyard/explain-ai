@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@types/request-promise": "^4.1.48",
-    "@types/slug": "^5.0.3"
+    "@types/slug": "^5.0.3",
+    "@types/three": "^0.149.0"
   }
 }
