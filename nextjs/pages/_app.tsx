@@ -12,7 +12,16 @@ export function Inner({ children }: any) {
 }
 
 const Splash = dynamic(() => import("../components/Splash"), {
-  loading: () => <p>Loading...</p>,
+  loading: () => (
+    <div
+      style={{
+        minHeight: 250,
+        backgroundColor: "#111",
+        position: "relative",
+        height: "auto",
+      }}
+    />
+  ),
 });
 
 export default function App({ Component, pageProps }: any) {

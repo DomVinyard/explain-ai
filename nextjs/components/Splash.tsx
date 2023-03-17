@@ -116,7 +116,7 @@ const HomePageComponent = () => {
                 marginLeft: -80,
               }}
               width={340}
-              height={260}
+              height={250}
               src="/byline.png"
             />
           </main>
