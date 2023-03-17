@@ -2,11 +2,10 @@ import Full from "./Full";
 import dynamic from "next/dynamic";
 import client from "@/lib/apollo-client";
 import { gql } from "@apollo/client";
-import Head from "next/head";
 import { TopicHead } from "@/components/Head";
 
 const Stub = dynamic(() => import("../../../../components/Stub"), {
-  loading: () => <p>Loading...</p>,
+  loading: () => <p></p>,
 });
 
 const audiences = ["5", "20"];
