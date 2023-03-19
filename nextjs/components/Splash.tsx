@@ -68,7 +68,7 @@ const Globe = () => {
         minHeight: "380px",
         height: "50vh",
         width: "100%",
-        marginLeft: "12vw",
+        marginLeft: "15vw",
       }}
     >
       <Canvas
@@ -111,12 +111,12 @@ const HomePageComponent = () => {
             <Image
               alt="The AI knowledge platform"
               style={{
-                marginTop: 100,
+                marginTop: 65,
                 position: "absolute",
                 marginLeft: -80,
               }}
               width={340}
-              height={250}
+              height={410}
               src="/byline.png"
             />
           </main>
