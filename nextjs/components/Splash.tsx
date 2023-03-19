@@ -125,7 +125,7 @@ const HomePageComponent = () => {
         </div>
         <div
           style={{
-            background: "black",
+            background: "#111",
             textAlign: "center",
             padding: 16,
           }}
