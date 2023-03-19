@@ -125,7 +125,7 @@ const HomePageComponent = () => {
         </div>
         <div
           style={{
-            background: "#111",
+            background: "#000",
             textAlign: "center",
             padding: 16,
           }}
@@ -138,13 +138,7 @@ const HomePageComponent = () => {
                 justifyContent: "center",
               }}
             >
-              <span
-                style={{
-                  color: "#fff",
-                }}
-              >
-                Powered By
-              </span>
+              <span style={{ color: "#fff" }}>Powered By</span>
               <img
                 style={{ marginLeft: 4, marginTop: 2 }}
                 height={19}
