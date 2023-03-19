@@ -65,8 +65,8 @@ const Globe = () => {
   return (
     <div
       style={{
-        minHeight: "380px",
-        height: "50vh",
+        minHeight: 480,
+        height: 480,
         width: "100%",
         marginLeft: "15vw",
       }}
@@ -92,7 +92,7 @@ const HomePageComponent = () => {
     <>
       <div
         style={{
-          minHeight: 250,
+          // minHeight: 170,
           backgroundColor: "#111",
           position: "relative",
           height: "auto",
@@ -109,11 +109,11 @@ const HomePageComponent = () => {
         >
           <main>
             <Image
-              alt="The AI knowledge platform"
+              alt="We asked AI to Explain Everything"
               style={{
-                marginTop: 65,
+                marginTop: 60,
                 position: "absolute",
-                marginLeft: -80,
+                // marginLeft: -80,
               }}
               width={340}
               height={410}
