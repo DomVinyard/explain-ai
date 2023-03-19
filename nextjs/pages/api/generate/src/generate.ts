@@ -31,7 +31,7 @@ const lengths = [
     key: "extra_short",
     token: { 5: "15 words or less", 20: "20 words or less" },
   },
-  { key: "long", token: { 5: "about 100 words", 20: "about 250 words" } },
+  { key: "long", token: { 5: "about 100 words", 20: "about 200 words" } },
 ] as any;
 
 const generate = async ({ name }: { name: string }) => {
@@ -204,6 +204,7 @@ const generate = async ({ name }: { name: string }) => {
     });
     return { slug, data: result };
   } catch (e) {
+    console.error(e);
     throw e;
   }
 };

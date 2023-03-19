@@ -41,10 +41,11 @@ export default async function handler(
       );
 
     // Check that the generated_at field is empty. if not, reject (it's already done)
+    // TODO: also check the descriptions length
     if (topic.generated_at) {
       await Promise.all(
-        ["5", "20"].map((audience) =>
-          res.revalidate(`/topic/${slug}/${audience}`)
+        ["5", "20"].map(
+          async (audience) => await res.revalidate(`/topic/${slug}/${audience}`)
         )
       );
       return res.json({
