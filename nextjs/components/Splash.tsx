@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Object3D } from "three/src/core/Object3D";
 import Image from "next/image";
+import Link from "next/link";
 
 const ROTATION_SPEED = 0.002;
 const Model = ({ baseSpeed = 0.0002 }): any => {
@@ -121,6 +122,37 @@ const HomePageComponent = () => {
             />
           </main>
           <Globe />
+        </div>
+        <div
+          style={{
+            background: "black",
+            textAlign: "center",
+            padding: 16,
+          }}
+        >
+          <Link href="/about">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <span
+                style={{
+                  color: "#fff",
+                }}
+              >
+                Powered By
+              </span>
+              <img
+                style={{ marginLeft: 4, marginTop: 2 }}
+                height={19}
+                src="/sigma.png"
+                alt="Sigma Labs"
+              />
+            </div>
+          </Link>
         </div>
       </div>
     </>

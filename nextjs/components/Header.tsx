@@ -10,7 +10,7 @@ export default function Header({ slug, audience, page }: any) {
     <header>
       <Inner>
         <div className={styles.container}>
-          <Link href={`/groups/${audience}`}>
+          <Link href={`/groups/${audience || 20}`}>
             <Image
               className={styles.pointer}
               src="/logo.png"
