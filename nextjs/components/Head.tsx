@@ -57,10 +57,13 @@ export function GroupsHead() {
   return (
     <>
       <Head>
-        <title>ExplainAI: The AI Knowledge Platform</title>
+        <title>ExplainAI</title>
         <Favicon />
         <meta property="og:site_name" content={"ExplainAI"} />
-        <meta name="description" content={"The AI Knowledge Platform"} />
+        <meta
+          name="description"
+          content={"We asked AI to explain EVERYTHING!"}
+        />
         <meta name="author" content="Sigma Labs" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>

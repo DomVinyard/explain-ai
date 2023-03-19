@@ -7,12 +7,12 @@ const nextConfig = {
     return [
       {
         source: "/",
-        destination: "/groups/5",
+        destination: "/groups/20",
         permanent: true,
       },
       {
         source: "/topic/:topic",
-        destination: "/topic/:topic/5",
+        destination: "/topic/:topic/20",
         permanent: true,
       },
     ];
