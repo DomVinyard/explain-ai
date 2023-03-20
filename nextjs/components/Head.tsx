@@ -62,7 +62,7 @@ export function GroupsHead() {
         <meta property="og:site_name" content={"ExplainAI"} />
         <meta
           name="description"
-          content={"We asked AI to explain EVERYTHING!"}
+          content={`We asked AI to "Explain Everything"`}
         />
         <meta name="author" content="Sigma Labs" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

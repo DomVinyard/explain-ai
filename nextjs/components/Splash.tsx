@@ -30,7 +30,7 @@ const Splash = () => {
             }}
           >
             <Image
-              alt="We asked AI to Explain Everything"
+              alt={`We asked AI to "Explain Everything"`}
               style={{ marginTop: 60 }}
               width={340}
               height={410}
