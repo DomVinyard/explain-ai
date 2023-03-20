@@ -36,7 +36,7 @@ const Splash = () => {
               height={410}
               src="/byline.png"
             />
-            <img src="/bot.png" style={{ width: "440px" }} />
+            <img src="/bot.png" style={{ width: "440px", marginBottom: -15 }} />
           </main>
         </div>
         <div
