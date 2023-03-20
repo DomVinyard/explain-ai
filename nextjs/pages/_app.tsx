@@ -3,6 +3,7 @@ import "./styles.css";
 import dynamic from "next/dynamic";
 
 import { Analytics } from "@vercel/analytics/react";
+import Splash from "../components/Splash";
 
 export const metadata = {
   title: "Create Next App",
@@ -12,19 +13,6 @@ export const metadata = {
 export function Inner({ children }: any) {
   return <main>{children}</main>;
 }
-
-const Splash = dynamic(() => import("../components/Splash"), {
-  loading: () => (
-    <div
-      style={{
-        minHeight: 250,
-        backgroundColor: "#111",
-        position: "relative",
-        height: "auto",
-      }}
-    />
-  ),
-});
 
 export default function App({ Component, pageProps }: any) {
   return (
