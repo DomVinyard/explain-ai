@@ -16,6 +16,7 @@ export default async function handler(
 ) {
   const { name } = req.body;
   const slug = slugify(name);
+  console.log(`[OpenAI] Generating /${slug}`);
 
   try {
     if (!name) throw new Error("Missing name");
@@ -102,7 +103,6 @@ export default async function handler(
         "Too many topics generated in the past 24 hours. Please try again later."
       );
 
-    console.log(`[OpenAI] Generating /${name}`);
     const start = Date.now();
     const { data } = await generate({ name });
     const endpoint = `${DB_ENDPOINT}/api/rest/topic`; // switch to apollo
